@@ -1,0 +1,112 @@
+---
+title: "File Input"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+    fileInput("file", label = h3("File Input")),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    output$value <- renderPrint({ str(input$file) })
+    
+  },
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## File Input {.tabset}
+
+Creates a file upload manager that can be used to upload one or more files at once. Does not work on older browsers, including Internet Explorer 9 and earlier.
+
+The file upload widget will pass the server a data frame that contains one row for each file uploaded and four columns:
+
+- <span style="color: red">name</span> The filename provided by the web browser for the file
+- <span style="color: red">size</span> The size of the uploaded file in bytes
+- <span style="color: red">type</span> The MIME type of the file (as reported by the browser). For example <span style="color: red">text/plain</span> or an empty string (if the browser could not determine the type).
+- <span style="color: red">datapath</span> The path to the temp file that contains the data that was uploaded. This file may be deleted if the user performs another upload operation.
+
+**Function**
+
+```{r eval=F, echo=T}
+fileInput(inputId, label, multiple = FALSE, accept = NULL)
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display above the widget
+
+<span style="color: red">multiple</span> Whether or not the user should be allowed to upload multiple files at once
+
+<span style="color: red">accept</span> A character vector of MIME types that the browser can expect the uploaded files to be.
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+  
+  fileInput("file", label = h3("File Input")),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ str(input$file) })
+  
+}
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  fileInput("file", label = h3("File Input")),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+  
+  output$value <- renderPrint({ str(input$file) })
+  
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

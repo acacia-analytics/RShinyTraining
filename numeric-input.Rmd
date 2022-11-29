@@ -1,0 +1,109 @@
+---
+title: "Numeric Input"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+    numericInput("num", label = h3("Numeric Input"), value = 1),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    output$value <- renderPrint({ input$num })
+    
+  },
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Numeric Input {.tabset}
+
+Creates a box you can use to enter numeric values. You can type a number or scroll through values with the box's scroll bar. The widget will pass the value shown in the box to the server as a double (e.g. number).
+
+**Function**
+
+```{r eval=F, echo=T}
+numericInput(inputId, label, value, min = NA, max = NA, step = NA)
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display above the number field
+
+<span style="color: red">value</span> The initial number to display in the number field
+
+<span style="color: red">min</span> The minimum number that can be selected
+
+<span style="color: red">max</span> The maximum number that can be selected
+
+<span style="color: red">step</span> The amount to increment the value by when a user clicks up or down on the scroll bar.
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+    
+    numericInput("num", label = h3("Numeric Input"), value = 1),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  )
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ input$num })
+  
+}
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  numericInput("num", label = h3("Numeric Input"), value = 1),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+  
+  output$value <- renderPrint({ input$num })
+  
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

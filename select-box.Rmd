@@ -1,0 +1,115 @@
+---
+title: "Select Box"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+    selectInput("select", label = h3("Select Box"), 
+                choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+                selected = 1),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    output$value <- renderPrint({ input$select })
+    
+  },
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Select Box {.tabset}
+
+Creates a drop-down list that you can use to select one or more items. The widget will pass the value of the selected items to the server as a vector of character strings (usually of length one).
+
+**Function**
+
+```{r eval=F, echo=T}
+selectInput(inputId, label, choices, selected = NULL, multiple = FALSE, selectize = TRUE)
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display above the drop-down box
+
+<span style="color: red">choices</span> A list of values. The widget will include a menu option for each value of the list. If the list has names, these will be displayed in the drop down menu. Otherwise the values themselves will be displayed.
+
+<span style="color: red">selected</span> The value(s) that should initially be selected. Defaults to the first value, or no values if <span style="color: red">multiple = TRUE</span>.
+
+<span style="color: red">multiple TRUE</span> if the user is allowed to select multiple values at once. <span style="color: red">FALSE</span> otherwise.
+
+<span style="color: red">selectize TRUE</span> id Shiny should use selectize.js to build an enriched selection box. <span style="color: red">FALSE</span> if Shiny should build a basic selection box.
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+  
+  selectInput("select", label = h3("Select Box"), 
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+    selected = 1),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ input$select })
+  
+}
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  selectInput("select", label = h3("Select Box"), 
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+    selected = 1),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+
+  output$value <- renderPrint({ input$select })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

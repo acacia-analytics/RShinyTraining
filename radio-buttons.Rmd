@@ -1,0 +1,111 @@
+---
+title: "Radio Buttons"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+    radioButtons("radio", label = h3("Radio Buttons"),
+                 choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+                 selected = 1),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    output$value <- renderPrint({ input$radio })
+    
+  },
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Radio Buttons {.tabset}
+
+Creates a set of radio buttons, several buttons only one of which can be pressed at any time. The widget will return the value of the selected button to the server as a character string.
+
+**Function**
+
+```{r eval=F, echo=T}
+radioButtons(inputId, label, choices, selected = NULL)
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display above the buttons
+
+<span style="color: red">choices</span> A list of values. The widget will build a button for each value of the list. If the list has names, these will be displayed next to the buttons. Otherwise the values themselves will be displayed.
+
+<span style="color: red">selected</span> The value that should initially be selected, defaults to the first value.
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+  
+  radioButtons("radio", label = h3("Radio Buttons"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+    selected = 1),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ input$radio })
+  
+}
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  radioButtons("radio", label = h3("Radio Buttons"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+    selected = 1),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+
+  output$value <- renderPrint({ input$radio })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

@@ -1,0 +1,105 @@
+---
+title: "Single Checkbox"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+    # Copy the line below to make a checkbox
+    checkboxInput("checkbox", label = "Choice A", value = TRUE),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    # You can access the value of the widget with input$checkbox, e.g.
+    output$value <- renderPrint({ input$checkbox })
+    
+  },
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Single Checkbox {.tabset}
+
+Creates a single checkbox. The widget sends the server <span style="color: red">TRUE</span> if the box is checked, <span style="color: red">FALSE</span> otherwise.
+
+**Function**
+
+```{r eval=F, echo=T}
+checkboxInput(inputId, label, value = FALSE)
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display next to the checkbox
+
+<span style="color: red">value</span> A logical value. If <span style="color: red">TRUE</span>, the checkbox will begin checked. If <span style="color: red">FALSE</span>, it will begin unchecked.
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+  
+  checkboxInput("checkbox", label = "Choice A", value = TRUE),
+    
+  hr(),
+  
+  fluidRow(column(3, verbatimTextOutput("value")))
+  
+)
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ input$checkbox })
+  
+}
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  checkboxInput("checkbox", label = "Choice A", value = TRUE),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+
+  output$value <- renderPrint({ input$checkbox })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

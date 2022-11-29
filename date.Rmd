@@ -1,0 +1,115 @@
+---
+title: "Date Input"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+    dateInput("date", label = h3("Date Input"), value = "2014-01-01"),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    output$value <- renderPrint({ input$date })
+    
+  },
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Date Input {.tabset}
+
+Creates a text field that the user can click on to access a calendar to select a date. Sends the result to the server as a date-time of class <span style="color: red">Date</span>.
+
+**Function**
+
+```{r eval=F, echo=T}
+dateInput(inputId, label, value = NULL, min = NULL, max = NULL, format = "yyyy-mm-dd", startview = "month", weekstart = 0, language = "en")
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display above the text field
+
+<span style="color: red">value</span> The initial date to display. Either a Date object, or a string in yyyy-mm-dd format. If NULL (the default), will use the current date in the client's time zone.
+
+<span style="color: red">min</span> The minimum allowed date. Either a Date object, or a string in yyyy-mm-dd format.
+
+<span style="color: red">max</span> The maximum allowed date. Either a Date object, or a string in yyyy-mm-dd format.
+
+<span style="color: red">format</span> The format of the date to display in the browser. Defaults to "yyyy-mm-dd". See the help page for a list of options (?dateInput).
+
+<span style="color: red">startview</span> The date range shown when the input object is first clicked. Can be "month" (the default), "year", or "decade".
+
+<span style="color: red">weekstart</span> Which day is the start of the week. Should be an integer from 0 (Sunday) to 6 (Saturday).
+
+<span style="color: red">language</span> The language used for month and day names. Default is "en" for English. Other valid values include "bg", "ca", "cs", "da", "de", "el", "es", "fi", "fr", "he", "hr", "hu", "id", "is", "it", "ja", "kr", "lt", "lv", "ms", "nb", "nl", "pl", "pt", "pt-BR", "ro", "rs", "rs-latin", "ru", "sk", "sl", "sv", "sw", "th", "tr", "uk", "zh-CN", and "zh-TW".
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+    
+  dateInput("date", label = h3("Date input"), value = "2014-01-01"),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ input$date })
+  
+})
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  dateInput("date", label = h3("Date input"), value = "2014-01-01"),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+
+  output$value <- renderPrint({ input$date })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

@@ -1,0 +1,113 @@
+---
+title: "Checkbox Group"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+    checkboxGroupInput("checkGroup", label = h3("Checkbox Group"), 
+                       choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+                       selected = 1),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    # You can access the values of the widget (as a vector)
+    # with input$checkGroup, e.g.
+    output$value <- renderPrint({ input$checkGroup })
+    
+  },
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Checkbox Group {.tabset}
+
+Creates a group of checkboxes. The widget sends the server a character vector that contains the values of the selected boxes.
+
+**Function**
+
+```{r eval=F, echo=T}
+checkboxGroupInput(inputId, label, choices, selected = NULL)
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display above the check boxes
+
+<span style="color: red">choices</span> A list of values. The widget will build a checkbox for each value of the list. If the list has names, these will be displayed next to the checkboxes. Otherwise the values themselves will be displayed.
+
+<span style="color: red">selected</span> The values that should initially be selected, if any.
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+    
+  checkboxGroupInput("checkGroup", label = h3("Checkbox Group"), 
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ input$checkGroup })
+  
+})
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  checkboxGroupInput("checkGroup", label = h3("Checkbox Group"), 
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+
+  output$value <- renderPrint({ input$checkGroup })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

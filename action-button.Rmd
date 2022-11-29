@@ -1,0 +1,100 @@
+---
+title: "Action Button"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+    
+  # Copy the line below to make an action button
+  actionButton("action", label = "Action"),
+  
+  hr(),
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+),
+
+  server = function(input, output) {
+
+  # You can access the value of the widget with input$action, e.g.
+  output$value <- renderPrint({ input$action })
+
+},
+
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Action Button {.tabset}
+
+Creates an action button whose value is initially zero. The value advances by one each time the button is pressed. This change can spur an action, even if your app does not directly use the value.
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> The label to display in the button. This can also be an HTML element such as an image.
+
+<span style="color: red">icon</span> Optional icon to appear on the button
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+shinyUI(fluidPage(
+  
+  # Copy the line below to make an action button
+  actionButton("action", label = "Action"),
+  
+  hr(),
+  fluidRow(column(12, verbatimTextOutput("value"))
+           
+))
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+shinyServer(function(input, output) {
+
+  # You can access the value of the widget with input$action, e.g.
+  output$value <- renderPrint({ input$action })
+  
+})
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+    
+  # Copy the line below to make an action button
+  actionButton("action", label = "Action"),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+
+  # You can access the value of the widget with input$action, e.g.
+  output$value <- renderPrint({ input$action })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```

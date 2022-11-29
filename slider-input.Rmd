@@ -1,0 +1,123 @@
+---
+title: "Slider Input"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<br>
+
+```{r, echo=FALSE}
+
+shinyApp(
+
+  ui = fluidPage(
+
+    sliderInput("slider1", label = h3("Slider Input"), min = 0, max = 100, value = 50),
+    
+    hr(),
+    
+    fluidRow(column(12, verbatimTextOutput("value")))
+    
+  ),
+  
+  server = function(input, output) {
+    
+    output$value <- renderPrint({ input$slider1 })
+    
+  },
+  
+  options = list(height = 350, display.mode = "showcase")
+)
+```
+
+## Slider Input {.tabset}
+
+Creates a slider bar to select one value. Passes the selected value to the server as a number.
+
+Note: A slider bar and a slider range both use the same function, sliderInput. See the <span style="color: red">value</span> argument for an explanation.
+
+**Function**
+
+```{r eval=F, echo=T}
+sliderInput(inputId, label, min, max, value, step = NULL, round = FALSE, format = "#,##0.#####", locale = "us", ticks = TRUE, animate = FALSE)
+```
+
+**Arguments**
+
+<span style="color: red">inputId</span> The name to use to look up the value of the widget (as a character string)
+
+<span style="color: red">label</span> A label to display above the slider bar
+
+<span style="color: red">min</span> The minimum value to use in the slider bar.
+
+<span style="color: red">min</span> The maximum value to use in the slider bar.
+
+<span style="color: red">value</span> The initial value to display in the slider bar. If <span style="color: red">value</span> is a vector of two numbers, Shiny will place two sliders on the bar, which will let your user select the endpoints of a range. If <span style="color: red">value</span> is a single number, Shiny will create a basic slider like the one shown above.
+
+<span style="color: red">step</span> The increment to place between each selectable value on the slider bar.
+
+<span style="color: red">round TRUE</span> to round every value to an integer. <span style="color: red">FALSE</span> to perform no rounding. An integer to specify which digit to round to. Positive integers will round to digits left of the decimal place. Negative integers will round to digits right of the decimal place.
+
+<span style="color: red">sep</span> Separator between thousands places in numbers.
+
+<span style="color: red">pre</span> A prefix string to put in front of the value.
+
+<span style="color: red">post</span> A suffix string to put after the value.
+
+<span style="color: red">ticks</span> TRUE to show tick marks, FALSE to hide them.
+
+<span style="color: red">animate TRUE</span> to show default animation controls with default settings. This will let your user "play" the app as it iterates through every slider value. <span style="color: red">FALSE</span> otherwise.
+
+<br>
+
+### ui.R
+```{r, eval=F, echo=T}
+
+fluidPage(
+  
+  sliderInput("slider1", label = h3("Slider Input"), min = 0, max = 100, value = 50),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+  
+```
+### server.R
+```{r, eval=F, echo=T}
+
+function(input, output) {
+
+  output$value <- renderPrint({ input$slider1 })
+  
+}
+```
+### app.R
+```{r, eval=F, echo=T}
+
+ui = fluidPage(
+
+  sliderInput("slider1", label = h3("Slider Input"), min = 0, max = 100, value = 50),
+  
+  hr(),
+  
+  fluidRow(column(12, verbatimTextOutput("value")))
+  
+)
+
+server = function(input, output) {
+
+  output$value <- renderPrint({ input$slider1 })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```
